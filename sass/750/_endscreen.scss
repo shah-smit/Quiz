@@ -1,0 +1,13 @@
+label {
+	text-align: center;
+}
+#restart {
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+	position: relative;
+	top: -10px;
+	&:hover {
+	  top: -12px;
+	}
+}
