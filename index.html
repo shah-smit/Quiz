@@ -21,6 +21,7 @@
 </head>
 <body>
 
+	<!-- wrapper containing all quiz contents -->
 	<div id="wrapper">
 
 		<div id="title">QUIZ</div>
@@ -34,6 +35,16 @@
 
 	</div>
 
+	<!-- Mustache templates -->
+	<script id="templ-choice" type="x-tmpl-mustache">
+		<label for="{{num}}" >
+			<li>
+				<input type="radio" name="option" id="{{num}}" value="{{num}}" />
+				{{choice}}
+			</li>
+		</label>
+	</script>
+
 	<script id="templ-result" type="x-tmpl-mustache">
 		<div class="result">
 			Q{{question_num}}. <span class="{{colour}}">{{message}}</span>
@@ -42,6 +53,7 @@
 			{{/correct}}
 		</div>
 	</script>
+
 	<script id="templ-score" type="x-tmpl-mustache">
 		<div class="score">
 			Your final score is {{score}} out of {{no_qs}}<br />

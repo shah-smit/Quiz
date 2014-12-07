@@ -11,7 +11,14 @@ $(document).ready(function() {
 
 			// Create options
 			for (var j = 0; j < 3; j++) {
-				var element = '<label for="'+j+'" ><li><input type="radio" name="option" id="'+j+'" value="'+j+'" />'+tempObj.choices[j]+'</li></label>';
+				var info = {
+					num: j,
+					choice: tempObj.choices[j]
+				}
+
+				var templ_choice = $('#templ-choice').html();
+				Mustache.parse(templ_choice);
+				var element = Mustache.render(templ_choice, info);
 				$('#choices').append(element);
 			}
 
@@ -38,6 +45,8 @@ $(document).ready(function() {
 				});
 				previd = answers[looper];
 			}
+
+			// bring wrapper down
 			$('#wrapper').show("blind", transTime, function(){
 				$('.button').show("fast");
 			});
@@ -55,7 +64,7 @@ $(document).ready(function() {
 			if(answers[looper]){
 				if (answers[looper] != $("input:radio:checked").attr("id")) {
 					answers.pop();
-					answers.push( $("input:radio:checked").attr("value") );
+					answers.push($("input:radio:checked").attr("value"));
 				}
 			} else {
 				answers.push( $("input:radio:checked").attr("value") );
