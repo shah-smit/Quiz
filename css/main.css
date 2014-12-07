@@ -41,27 +41,14 @@
     display: inline-block;
     float: left;
     color: #888;
-    font-size: 15pt;
+    font-size: 20px;
     font-weight: 300;
     position: absolute;
-    margin: 10px;
+    margin: 0 15px;
     padding: 10px;
     box-sizing: border-box;
     border: 1px solid #aaa;
     border-radius: 0 10px 10px 10px; }
-    .result .mini-q::before {
-      content: "";
-      position: absolute;
-      display: inline-block;
-      background: white;
-      left: -5.5px;
-      top: 0.5px;
-      border: solid #888;
-      border-width: 0 0 1px 1px;
-      box-sizing: border-box;
-      width: 10px;
-      height: 10px;
-      transform: rotate(45deg); }
 
 .green {
   color: #8a8; }

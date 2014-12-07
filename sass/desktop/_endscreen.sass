@@ -7,36 +7,18 @@
 
 	.mini-q
 
-		$border-width: 1px
-		$margin: 10px
-
 		display: inline-block
 		float: left
 		color: #888
 		font:
-			size: 15pt
+			size: 20px
 			weight: 300
 		position: absolute
-		margin: $margin
+		margin: 0 15px
 		padding: 10px
 		box-sizing: border-box
-		border: $border-width solid #aaa
+		border: 1px solid #aaa
 		border-radius: 0 10px 10px 10px
-
-		$size: 10px
-		&::before
-			content: ""
-			position: absolute
-			display: inline-block
-			background: white
-			left: -($size + $border-width)/2
-			top: $border-width/2
-			border: solid #888
-			border-width: 0 0 $border-width $border-width
-			box-sizing: border-box
-			width: $size
-			height: $size
-			transform: rotate(45deg)
 
 .green
 	color: #8a8

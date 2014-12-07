@@ -193,7 +193,7 @@ $(document).ready(function() {
 		else throw new Error('Invalid EndScreen test mode');
 		looper = 7;
 	}
-	testEndScreen('rand');
+	//testEndScreen('wrong');
 /**************************/
 
 });
