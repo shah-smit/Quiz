@@ -12,7 +12,7 @@
 .button, #restart {
   position: relative;
   top: -50px;
-  color: #bbbbbb;
+  color: #bbb;
   text-align: left;
   font-size: 1.5em;
   margin: 0 0 auto auto;
@@ -20,28 +20,54 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #990000;
-  box-shadow: inset 0 2px 0 1px #440000, 0 0 0 1px #666666;
-  -webkit-transition: top 0.2s, color 0.2s, box-shadow 0.2s, background-color 0.2s;
-  -moz-transition: top 0.2s, color 0.2s, box-shadow 0.2s, background-color 0.2s;
-  transition: top 0.2s, color 0.2s, box-shadow 0.2s, background-color 0.2s; }
+  background-color: #900;
+  box-shadow: inset 0 2px 0 1px #400, 0 0 0 1px #666;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s; }
   .button:hover, #restart:hover {
-    background-color: #aa0000;
+    background-color: #A00;
     color: white;
-    box-shadow: inset 0 0 0 1px #440000, 0 2px 0 1px #666666;
+    box-shadow: inset 0 0 0 1px #400, 0 2px 0 1px #666;
     top: -52px; }
 
 .result {
   text-align: center;
   font-size: 2em;
   margin: 0 auto;
-  padding: 10px; }
+  padding: 10px;
+  position: relative; }
+  .result .mini-q {
+    display: inline-block;
+    float: left;
+    color: #888;
+    font-size: 15pt;
+    font-weight: 300;
+    position: absolute;
+    margin: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+    border-radius: 0 10px 10px 10px; }
+    .result .mini-q::before {
+      content: "";
+      position: absolute;
+      display: inline-block;
+      background: white;
+      left: -5.5px;
+      top: 0.5px;
+      border: solid #888;
+      border-width: 0 0 1px 1px;
+      box-sizing: border-box;
+      width: 10px;
+      height: 10px;
+      transform: rotate(45deg); }
 
 .green {
-  color: #88aa88; }
+  color: #8a8; }
 
 .red {
-  color: #aa8888; }
+  color: #a88; }
 
 .score {
   text-align: center;
@@ -66,7 +92,7 @@ body {
 
 #wrapper {
   width: 90%;
-  color: #333333;
+  color: #333;
   background-color: white;
   margin: 0 auto;
   border-radius: 0 0 15px 15px; }
@@ -74,7 +100,7 @@ body {
 #title {
   text-align: center;
   font-size: 5em;
-  background-color: #eeeeee;
+  background-color: #eee;
   padding-bottom: 10px; }
 
 #question_wrap {
@@ -98,7 +124,7 @@ li {
   margin: 1% auto;
   font-size: 1.3em;
   padding: 1.5%;
-  background-color: #dddddd;
+  background-color: #ddd;
   -webkit-transition: border-color 0.5s, background-color 0.5s;
   -moz-transition: border-color 0.5s, background-color 0.5s;
   transition: border-color 0.5s, background-color 0.5s; }
@@ -107,9 +133,9 @@ input[type=radio] {
   display: none; }
 
 .selected {
-  border: 2px solid #006600;
-  background-color: #88aa88;
-  color: black; }
+  border: 2px solid #060;
+  background-color: #8A8;
+  color: #000; }
 
 @media only screen and (max-width: 900px) {
   .button, #restart {
@@ -153,3 +179,5 @@ input[type=radio] {
 
   label {
     font-size: 1em; } }
+
+/*# sourceMappingURL=main.css.map */

@@ -13,13 +13,16 @@
 	<!-- Scripts -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<script src="mustache.js"></script>
 	<script src="script.js"></script>
 
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="favicon.png" />
 </head>
 <body>
+
 	<div id="wrapper">
+
 		<div id="title">QUIZ</div>
 
 		<div id="question_wrap">
@@ -28,6 +31,24 @@
 			<div class="button" id="back_button">&larr; Back</div>
 			<div class="button" id="next_button">Next &rarr;</div>
 		</div>
+
 	</div>
+
+	<script id="templ-result" type="x-tmpl-mustache">
+		<div class="result">
+			Q{{question_num}}. <span class="{{colour}}">{{message}}</span>
+			{{^correct}}
+			<div class="mini-q">{{question}}</div>
+			{{/correct}}
+		</div>
+	</script>
+	<script id="templ-score" type="x-tmpl-mustache">
+		<div class="score">
+			Your final score is {{score}} out of {{no_qs}}<br />
+			{{percentage}}%
+		</div>
+		<div id="restart">&larr; Restart Quiz</div>
+	</script>
+
 </body>
 </html>

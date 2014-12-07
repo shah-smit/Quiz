@@ -92,26 +92,50 @@ $(document).ready(function() {
 		$('#question_wrap').hide();
 		$('#title').html('Results');
 		$('#wrapper').append('<div id="results"></div>');
+
 		// Compare answers to correct answers
 		for (var i = 0; i < questions.length; i++) {
 			var msg;
 			var colour;
 
 			if (answers[i] == questions[i].correctAnswer) {
-				msg = "Correct";
+				correct = true;
 				colour = "green";
 				score++;
 			} else {
-				msg = "Incorrect";
+				correct = false;
 				colour = "red";
 			}
-			// Add div with question number and resut
-			$('#results').append('<div class="result">Q'+(i+1)+'. <span class="'+colour+'">'+msg+'</span></div>');
+
+			var info = {
+				message: correct ? "Correct" : "Incorrect",
+				question_num: i+1,
+				colour: colour,
+				correct: correct,
+				question: questions[i].question
+			}
+
+			// mustache rendering to put in result
+			var templ_result = $('#templ-result').html();
+			Mustache.parse(templ_result);
+			var result = Mustache.render(templ_result, info);
+			$('#results').append(result);
+			// todo: SHOW ANSWER
 		}
+
 		// Display final score and rounded percentage
 		var percentage = Math.round((score/questions.length)*100);
-		$('#wrapper').append('<div class="score">Your final score is '+score+' out of '+questions.length+'<br>'+percentage+'%</div>');
-		$('#wrapper').append('<div id="restart">&larr; Re-Start Quiz</div>');
+
+		var info = {
+			score: score,
+			no_qs: questions.length,
+			percentage: percentage
+		}
+		// more mustache to put in score and restart button
+		var templ_score = $('#templ-score').html();
+		Mustache.parse(templ_score);
+		var x = Mustache.render(templ_score, info);
+		$('#wrapper').append(x);
 
 		//Hide results on creation then transition them in
 		$('.result').hide();
@@ -141,15 +165,16 @@ $(document).ready(function() {
 		});
 	}
 
+	// Global vars
 	var looper = 0; // looper counter keeps track of current question
-	var answers = []; //declare answers array
+	var answers = [];
+	var questions = [];
 	var transTime = 1000; //Time in ms for wrapper transition time
 
 	$('#back_button').click(goBack);
 	$('#next_button').click(addAns);
 
-	// Make array to hold questions then request them from JSON file
-	var questions = [];
+	// Request questions from JSON file
 	$.getJSON("questions.json", function(data) {
 		$.each(data.questions, function(key, val) {
 			questions.push(val);
@@ -159,5 +184,16 @@ $(document).ready(function() {
 	}).fail(function(){
 		Alert('Sorry, there was a problem!');
 	});
+
+/******** DEV ONLY *********/
+	function testEndScreen(mode) {
+		if (mode == 'rand') answers = [0,0,0,0,0,0,0];
+		else if (mode == 'correct') answers = [1,0,0,1,2,0,0];
+		else if (mode == 'wrong') answers = [0,1,1,0,0,1,1];
+		else throw new Error('Invalid EndScreen test mode');
+		looper = 7;
+	}
+	testEndScreen('rand');
+/**************************/
 
 });
