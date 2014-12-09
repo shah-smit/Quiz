@@ -179,7 +179,7 @@ $(document).ready(function() {
 	}).done(function(){
 		quizLoop();
 	}).fail(function(){
-		Alert('Sorry, there was a problem!');
+		alert('Sorry, there was a problem!');
 	});
 
 /******** DEV ONLY *********/
