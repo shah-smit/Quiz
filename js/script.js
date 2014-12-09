@@ -172,7 +172,7 @@ $(document).ready(function() {
 	$('#next_button').click(addAns);
 
 	// Request questions from JSON file
-	$.getJSON("questions.json", function(data) {
+	$.getJSON("js/questions.json", function(data) {
 		$.each(data.questions, function(key, val) {
 			questions.push(val);
 		});
