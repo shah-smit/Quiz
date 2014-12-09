@@ -1,59 +1,56 @@
 $(document).ready(function() {
 
 	function quizLoop() {
-		// Go through each question
-		if (looper < questions.length) {
-			var tempObj = questions[looper];
-			var tempAnswer = tempObj.correctAnswer;
 
-			// Display question number and question
-			$('#question').html('<span class="number">Q'+(looper+1)+'. </span>'+tempObj.question);
-
-			// Create options
-			for (var j = 0; j < 3; j++) {
-				var info = {
-					num: j,
-					choice: tempObj.choices[j]
-				}
-
-				var templ_choice = $('#templ-choice').html();
-				Mustache.parse(templ_choice);
-				var element = Mustache.render(templ_choice, info);
-				$('#choices').append(element);
-			}
-
-			// Make option highlighting method
-			var previd;
-			var id;
-			$('input[type=radio][name=option]').change(function() {
-				id = $('input:radio:checked').attr('id');
-			    if (previd === undefined) {
-			    	$('label[for='+id+'] li').toggleClass('selected');
-			      	previd = id;
-			    } else {
-			       	$('label[for='+previd+'] li').toggleClass('selected');
-			       	$('label[for='+id+'] li').toggleClass('selected');
-			       	previd = id;
-			    }
-			});
-
-			// Check if question already has answer and highlight it
-			if(answers[looper]) {
-				$('label[for='+answers[looper]+'] li').toggleClass('selected');
-				$('input:radio[id='+answers[looper]+']').each(function(){
-					this.checked = true;
-				});
-				previd = answers[looper];
-			}
-
-			// bring wrapper down
-			$('#wrapper').show("blind", transTime, function(){
-				$('.button').show("fast");
-			});
-		} else if (looper == questions.length) {
-			// After last question, display end screen
+		// Show end screen if questions finished
+		if (looper == questions.length) {
 			displayEnd();
+			return;
 		}
+		var tempObj = questions[looper];
+		var tempAnswer = tempObj.correctAnswer;
+
+		// Display question number and question
+		$('#question').html('<span class="number">Q'+(looper+1)+'. </span>'+tempObj.question);
+
+		// Create options
+		for (var j = 0; j < 3; j++) {
+			var info = {
+				num: j,
+				choice: tempObj.choices[j]
+			}
+
+			var templ_choice = $('#templ-choice').html();
+			Mustache.parse(templ_choice);
+			var element = Mustache.render(templ_choice, info);
+			$('#choices').append(element);
+		}
+
+		// Make option highlighting method
+		var previd;
+		var id;
+		$('input[type=radio][name=option]').change(function() {
+			id = $('input:radio:checked').attr('id');
+		    if (previd !== undefined) {
+		       	$('label[for='+previd+'] li').toggleClass('selected');
+		    }
+		    $('label[for='+id+'] li').toggleClass('selected');
+		    previd = id;
+		});
+
+		// Check if question already has answer and highlight it
+		if(answers[looper]) {
+			$('label[for='+answers[looper]+'] li').toggleClass('selected');
+			$('input:radio[id='+answers[looper]+']').each(function(){
+				this.checked = true;
+			});
+			previd = answers[looper];
+		}
+
+		// bring wrapper down
+		$('#wrapper').show("blind", transTime, function(){
+			$('.button').show("fast");
+		});
 	}
 
 	function addAns(){
@@ -61,15 +58,7 @@ $(document).ready(function() {
 		if ( !$("input:radio:checked").length ) {
 			alert("Select an answer!");
 		} else {
-			if(answers[looper]){
-				if (answers[looper] != $("input:radio:checked").attr("id")) {
-					answers.pop();
-					answers.push($("input:radio:checked").attr("value"));
-				}
-			} else {
-				answers.push( $("input:radio:checked").attr("value") );
-			}
-			$('.button').hide("fast");
+			answers[looper ] = $("input:radio:checked").attr("value");
 			$('#wrapper').hide("blind", transTime, function(){
 				// Remove current question from html
 				$('#question').html('');
@@ -85,7 +74,6 @@ $(document).ready(function() {
 		// If user is at beginning, do nothing
 		if (looper === 0) return;
 		// Remove current question from html
-		$('.button').hide("fast");
 		$('#wrapper').hide("blind", transTime, function(){
 			$('#question').html('');
 			$('#choices').html('');
