@@ -1,0 +1,31 @@
+#question_wrap
+	width: 90%
+	margin: 0 auto
+	padding: 0 0 1% 0
+
+.number
+	color: #999999
+
+#question
+	font-size: 2.2em
+	text-align: center
+	margin: 10% auto
+
+li
+	list-style-type: none
+	width: 70%
+	border-radius: 5px
+	border: 2px solid black
+	margin: 1% auto
+	font-size: 1.3em
+	padding: 1.5%
+	background-color: #ddd
+	@include transition(border-color 0.5s, background-color 0.5s)
+
+input[type=radio]
+	display: none
+
+.selected
+	border: 2px solid #060
+	background-color: #8A8
+	color: #000

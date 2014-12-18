@@ -1,0 +1,26 @@
+#next_button
+	float: right
+
+#back_button
+	float: left
+
+.button
+	position: relative
+	top: -50px
+	color: #bbb
+	text-align: left
+	font-size: 1.5em
+	margin: 0 0 auto auto
+	padding: .5%
+	border: none
+	border-radius: 5px
+	cursor: pointer
+	background-color: #900
+	box-shadow: inset 0 2px 0 1px #400, 0 0 0 1px #666
+	@include transition(all 0.2s)
+
+	&:hover
+		background-color: #A00
+		color: white
+		box-shadow: inset 0 0 0 1px #400, 0 2px 0 1px #666
+		top: -52px

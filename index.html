@@ -13,7 +13,7 @@
 	<!-- Scripts -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
-	<script src="js/mustache.js"></script>
+	<script src="js/handlebars.js"></script>
 	<script src="js/script.js"></script>
 
 	<!-- Favicon -->
@@ -21,7 +21,7 @@
 </head>
 <body>
 
-	<!-- wrapper containing all quiz contents -->
+	<!-- wrapper for quiz contents -->
 	<div id="wrapper">
 
 		<div id="title">QUIZ</div>
@@ -35,17 +35,19 @@
 
 	</div>
 
-	<!-- Mustache templates -->
-	<script id="templ-choice" type="x-tmpl-mustache">
-		<label for="{{num}}" >
+	<!-- Handlebars templates -->
+	<script id="templ-choice" type="text/x-handlebars-template">
+	{{#.}}
+		<label for="{{@index}}" >
 			<li>
-				<input type="radio" name="option" id="{{num}}" value="{{num}}" />
-				{{choice}}
+				<input type="radio" name="option" id="{{@index}}" value="{{@index}}" />
+				{{.}}
 			</li>
 		</label>
+	{{/.}}
 	</script>
 
-	<script id="templ-result" type="x-tmpl-mustache">
+	<script id="templ-result" type="text/x-handlebars-template">
 		<div class="result">
 			Q{{question_num}}. <span class="{{colour}}">{{message}}</span>
 			{{^correct}}
@@ -54,7 +56,7 @@
 		</div>
 	</script>
 
-	<script id="templ-score" type="x-tmpl-mustache">
+	<script id="templ-score" type="text/x-handlebars-template">
 		<div class="score">
 			Your final score is {{score}} out of {{no_qs}}<br />
 			{{percentage}}%

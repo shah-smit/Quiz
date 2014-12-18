@@ -1,40 +1,40 @@
 {
-	"questions":
-	[
-		{
-			"question": "Who is Reginals Dwight better known as?",
-			"choices": ["Luka Bloom", "Elton John", "Elvis Costello"],
-			"correctAnswer": 1
-		},
-		{
-			"question": "In which sport would you have chukkas?",
-			"choices": ["Polo", "Quidditch", "Lacrosse"],
-			"correctAnswer": 0
-		},
-		{
-			"question": "What is the capital of the Falkland Islands?",
-			"choices": ["Port Stanley", "Salvador", "Camp Verde"],
-			"correctAnswer": 0
-		},
-		{
-			"question": "Fruit, pipistrol, and horseshoe are all types of what?",
-			"choices": ["Dogs", "Bats", "Flies"],
-			"correctAnswer": 1
-		},
-		{
-			"question": "In the United States which president abolished slavery?",
-			"choices": ["Barack Obama", "Theodore Roosevelt", "Abraham Lincoln"],
-			"correctAnswer": 2
-		},
-		{
-			"question": "What world famous card features a centurion on its face?",
-			"choices": ["American Express", "Visa", "Master Card"],
-			"correctAnswer": 0
-		},
-		{
-			"question": "Who is Prime Minister of the United Kingdom?",
-			"choices": ["David Cameron", "Gordon Brown", "Winston Churchill", "Tony Blair"],
-			"correctAnswer":0
-		}
-	]
+    "questions":
+    [
+        {
+            "question": "Who is Reginals Dwight better known as?",
+            "choices": ["Luka Bloom", "Elton John", "Elvis Costello"],
+            "correctAnswer": 1
+        },
+        {
+            "question": "In which sport would you have chukkas?",
+            "choices": ["Polo", "Quidditch", "Lacrosse"],
+            "correctAnswer": 0
+        },
+        {
+            "question": "What is the capital of the Falkland Islands?",
+            "choices": ["Port Stanley", "Salvador", "Camp Verde"],
+            "correctAnswer": 0
+        },
+        {
+            "question": "Fruit, pipistrol, and horseshoe are all types of what?",
+            "choices": ["Dogs", "Bats", "Flies"],
+            "correctAnswer": 1
+        },
+        {
+            "question": "In the United States which president abolished slavery?",
+            "choices": ["Barack Obama", "Theodore Roosevelt", "Abraham Lincoln"],
+            "correctAnswer": 2
+        },
+        {
+            "question": "What world famous card features a centurion on its face?",
+            "choices": ["American Express", "Visa", "Master Card"],
+            "correctAnswer": 0
+        },
+        {
+            "question": "Who is Prime Minister of the United Kingdom?",
+            "choices": ["David Cameron", "Gordon Brown", "Winston Churchill"],
+            "correctAnswer": 0
+        }
+    ]
 }
