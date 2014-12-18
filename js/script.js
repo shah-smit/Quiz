@@ -119,37 +119,28 @@ $(document).ready(function () {
         });
     }
 
+    function hideWrapper(n) {
+        $('#wrapper').hide("blind", transTime, function () {
+            $('#question').html('');
+            $('#choices').html('');
+            looper += n;
+            quizLoop();
+        });
+    }
+
     function addAns() {
         // Check an answer is chosen
         if (!$("input:radio:checked").length) {
             window.alert("Select an answer!");
         } else {
             answers[looper] = +$("input:radio:checked").attr("value");
-            $('#wrapper').hide("blind", transTime, function () {
-                // Remove current question from html
-                $('#question').html('');
-                $('#choices').html('');
-                // Increment loop counter and ask next question
-                looper++;
-                quizLoop();
-            });
+            hideWrapper(1);
         }
-        console.log(answers);
     }
 
     function goBack() {
         // If user is at beginning, do nothing
-        if (looper === 0) {
-            return;
-        }
-        // Remove current question from html
-        $('#wrapper').hide("blind", transTime, function () {
-            $('#question').html('');
-            $('#choices').html('');
-            // Deccrement loop counter and ask previous question
-            looper--;
-            quizLoop();
-        });
+        looper ? hideWrapper(-1) : return;
     }
 
     $('#back_button').click(goBack);
