@@ -140,7 +140,7 @@ $(document).ready(function () {
 
     function goBack() {
         // If user is at beginning, do nothing
-        looper ? hideWrapper(-1) : false;
+        looper && hideWrapper(-1);
     }
 
     $('#back_button').click(goBack);
