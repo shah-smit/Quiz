@@ -124,7 +124,7 @@ $(document).ready(function () {
         if (!$("input:radio:checked").length) {
             window.alert("Select an answer!");
         } else {
-            answers[looper] = parseInt($("input:radio:checked").attr("value"), 10);
+            answers[looper] = +$("input:radio:checked").attr("value");
             $('#wrapper').hide("blind", transTime, function () {
                 // Remove current question from html
                 $('#question').html('');
