@@ -17,7 +17,6 @@ $(function () {
             displayEnd();
             return;
         }
-
         var tempObj = questions[looper]; //object with q, options and answer
 
         // Display question number and question
@@ -39,8 +38,8 @@ $(function () {
 
         // Check if question already has answer and highlight it.
         if (answers[looper] !== void 0) {
-            $('label[for=' + answers[looper] + '] li').toggleClass('selected')
-            .find('input')[0].checked = true;
+            toggleSelected(answers[looper]);
+            $('.selected').find('input')[0].checked = true;
             previd = answers[looper];
         }
 
