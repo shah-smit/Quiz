@@ -14,10 +14,12 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/handlebars.js"></script>
+	<script src="js/modernizr.js"></script>
+	<script src="js/user.js"></script>
 	<script src="js/script.js"></script>
 
 	<!-- Favicon -->
-	<link rel="shortcut icon" href="favicon.png" />
+	<link rel="shortcut icon" href="img/favicon.png" />
 </head>
 <body>
 
@@ -35,12 +37,25 @@
 
 	</div>
 
+	<div id="side">
+		<div class="main">Create Profile</div>
+		<div class="stats">
+			<div class="username"></div>
+			<div class="stat games">Games played: <span class="number"></span></div>
+			<div class="stat hscore">Highest score: <span class="number"></span></div>
+		</div>
+		<div class="create">
+			username:<input type="text" />
+			<div class="go">submit</div>
+		</div>
+	</div>
+
 	<!-- Handlebars templates -->
 	<script id="templ-choice" type="text/x-handlebars-template">
 	{{#.}}
-		<label for="{{@index}}" >
+		<label for={{@index}}>
 			<li>
-				<input type="radio" name="option" id="{{@index}}" value="{{@index}}" />
+				<input type="radio" name="option" id={{@index}} value={{@index}} />
 				{{.}}
 			</li>
 		</label>
@@ -49,7 +64,7 @@
 
 	<script id="templ-result" type="text/x-handlebars-template">
 		<div class="result">
-			Q{{question_num}}. <span class="{{colour}}">{{message}}</span>
+			Q{{question_num}}. <span class={{colour}}>{{message}}</span>
 			{{^correct}}
 			<div class="mini-q">{{question}}</div>
 			{{/correct}}

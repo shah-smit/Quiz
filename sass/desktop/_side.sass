@@ -1,0 +1,73 @@
+#side
+    background: #333
+    color: white
+    position: fixed
+    right: 0
+    top: 0
+    font-size: 1.1em
+    font-family: sans-serif
+    font-weight: 300
+    padding: 10px
+    cursor: pointer
+    box-sizing: border-box
+    width: 200px
+
+    div
+        position: relative
+        padding: 5px
+
+    .stats
+        display: none
+
+    .main
+        text-align: center
+        &::before
+            content: ""
+            position: absolute
+            left: 50%
+            right: 50%
+            height: 1px
+            bottom: 0
+            background: #aaa
+            transition: all 0.25s ease-in-out
+
+        &.under::before
+            left: 10%
+            right: 10%
+
+        &:hover::before
+            left: 10%
+            right: 10%
+
+    .create
+        font-size: .8em
+        display: none
+        input
+            background: transparent
+            border: none
+            border-bottom: 1px solid #aaa
+            border-right: 1px solid #aaa
+            font-size: .8em
+            color: #aaa
+            width: 100px
+            padding: 5px
+
+            &:focus
+                outline: none
+
+.go
+    cursor: pointer
+    margin: 5px
+    font-size: 1em
+    background: #2A2A2A
+    text-align: center
+
+    #icon-go
+        bottom: -10%
+        position: absolute
+        padding: 5px
+        width: 35px
+        height: 35px
+
+        &:hover
+            color: white

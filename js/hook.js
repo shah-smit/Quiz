@@ -1,0 +1,1 @@
+$.extend({hook:function(h){return !h||h==='*'?$('[data-hook]'):$('[data-hook~="'+h+'"]');}})
