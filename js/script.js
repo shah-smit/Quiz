@@ -31,13 +31,15 @@ $(function () {
             $(this).text(m);
         });
 
-        for(var i=0; i<3; i++) {
+        for(var i=0; i<2; i++) {
             $message
-            .animate({color: 'white'}, time, ease)
             .animate({color: 'red'}, time, ease)
+            .animate({color: 'white'}, time, ease)
         }
 
         $message
+        .animate({color: 'red'}, time, ease)
+        .delay(1000)
         .animate({height: '2px'}, time, ease, function () {
             $(this).text('');
         })
@@ -59,7 +61,7 @@ $(function () {
         }
 
         function submitUser() {
-            var un = $(this).parent().find('input').val();
+            var un = $create.find('input').val();
             if (!un) {
                 message('Enter a username!');
                 return;
@@ -83,6 +85,9 @@ $(function () {
         }
 
         $('.go').click(submitUser);
+        $create.find('input').keydown(function(e) {
+            e.keyCode === 13 ? submitUser() : void 0;
+        });
 
     }
 
