@@ -181,47 +181,4 @@ input[type=radio] {
   background: #2A2A2A;
   text-align: center; }
 
-@media only screen and (max-width: 900px) {
-  .button, #restart {
-    font-size: 1.3em;
-    top: -40px; }
-    .button:hover, #restart:hover {
-      top: -42px; }
-
-  #restart:hover {
-    top: -42px; }
-
-  #question {
-    font-size: 2em; } }
-@media only screen and (max-width: 750px) {
-  .button, #restart {
-    width: 40%;
-    text-align: center;
-    position: relative;
-    top: 15px; }
-    .button:hover, #restart:hover {
-      top: 13px; }
-
-  label {
-    text-align: center; }
-
-  #restart {
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    top: -10px; }
-    #restart:hover {
-      top: -12px; } }
-@media only screen and (max-width: 550px) {
-  #question {
-    font-size: 1.8em;
-    margin: 10% 0 10% 10%; }
-
-  #title {
-    font-size: 3em; }
-
-  label {
-    font-size: 1em; } }
-
 /*# sourceMappingURL=main.css.map */
