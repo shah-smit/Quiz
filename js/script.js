@@ -20,6 +20,30 @@ $(function () {
         $restart = $wrapper.find('#restart'),
         $title = $wrapper.find('#title');
 
+    function message(m) {
+        var $message = $('.message');
+        var ease = 'easeInOutCubic';
+        var time = 500;
+
+        $message
+        .animate({right: '0%'}, time, ease)
+        .animate({height: '70px'}, time, ease, function () {
+            $(this).text(m);
+        });
+
+        for(var i=0; i<3; i++) {
+            $message
+            .animate({color: 'white'}, time, ease)
+            .animate({color: 'red'}, time, ease)
+        }
+
+        $message
+        .animate({height: '2px'}, time, ease, function () {
+            $(this).text('');
+        })
+        .animate({right: '-105%'}, time, ease);
+    }
+
     function initUser() {
         if (!Modernizr.localstorage) return;
 
@@ -37,7 +61,7 @@ $(function () {
         function submitUser() {
             var un = $(this).parent().find('input').val();
             if (!un) {
-                alert('Enter a username!');
+                message('Enter a username!');
                 return;
             }
             ls.username = un;
@@ -52,21 +76,14 @@ $(function () {
 
         if (ls.length) {
             insStats();
-            $stats.toggle("fast")
+            $stats.show()
         } else {
             $main.html('Create Profile')
-            $create.toggle();
+            $create.show();
         }
 
         $('.go').click(submitUser);
 
-    };
-    initUser();
-
-    function message(m) {
-        // slide in message box
-        // display message for few seconds, possibly w/ effects
-        // slide out message box
     }
 
     function quizLoop() {
@@ -158,7 +175,7 @@ $(function () {
         $restart.fadeIn();
 
         // If new high score, set in localStorage and increment game count
-        ls.hscore = score > ls.hscore ? (window.alert('New high score!'),score) : ls.hscore;
+        ls.hscore = score > ls.hscore ? (message('New high score!'),score) : ls.hscore;
         ls.games++;
         // Add these numbers to DOM
         $('.games .number').html(ls.games);
@@ -183,7 +200,7 @@ $(function () {
         if ($("input:radio:checked").length) {
             answers[looper] = +$("input:radio:checked").attr("value");
             swapQ(1);
-        } else window.alert("Select an answer!");
+        } else message("Select an answer!");
     }
 
     function goBack() {
@@ -205,6 +222,7 @@ $(function () {
     $next.click(addAns);
     $restart.click(restart);
 
+    initUser();
     // Request questions from JSON file
     $.getJSON("js/questions.json", function (data) {
         questions = data.questions;
