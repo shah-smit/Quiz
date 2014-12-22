@@ -2,15 +2,34 @@ $(function () {
     var looper = 0; // looper counter keeps track of current question
     var answers = [];
     var questions;
-    var transTime = 500; //Time in ms for wrapper transition time
+    var transTime = 300; //Time in ms for wrapper transition time
     var H = Handlebars;
     var ls = localStorage;
 
-    function toggleSelected(id){
-        $('label[for='+id+'] li').toggleClass('selected');
+    //Cache DOM
+    $wrapper = $('#wrapper');
+
+    $Qwrap = $wrapper.find('#question_wrap');
+    $question = $Qwrap.find('#question');
+    $back = $Qwrap.find('#back_button');
+    $next = $Qwrap.find('#next_button');
+    $fb = $back.add($next);
+
+    $results = $wrapper.find('#results');
+    $score = $wrapper.find('.score');
+    $restart = $wrapper.find('#restart');
+    $title = $wrapper.find('#title');
+
+    function message(m) {
+        // slide in message box
+        // display message for few seconds, possibly w/ effects
+        // slide out message box
     }
 
     function quizLoop() {
+        $results.hide();
+        $score.hide();
+        $restart.hide();
 
         //Show end screen if questions finished
         if (looper >= questions.length) {
@@ -20,7 +39,7 @@ $(function () {
         var tempObj = questions[looper]; //object with q, options and answer
 
         // Display question number and question
-        $('#question').html('<span class="number">Q' + (looper+1) + '. </span>' + tempObj.question);
+        $question.html('<span class="number">Q'+(looper+1)+'. </span>'+ tempObj.question);
 
         // Create options
         var templ_choice = H.compile($('#templ-choice').html());
@@ -44,31 +63,29 @@ $(function () {
         }
 
         // bring wrapper down
-        $('#question_wrap').fadeIn(transTime);
+        $Qwrap.fadeIn(transTime);
     }
-
 
     function displayEnd() {
         var score = 0;
 
-        $("#next_button").hide();
-        $('#question_wrap').hide();
-        $('#title').text('Results');
-        $('#wrapper').append('<div id="results"></div>');
+        $fb.hide();
+        $Qwrap.hide();
+        $title.text("Results");
+        $results.show();
 
-        var i;
         var correct;
         // Cache template before loop to avoid re-searching and compiling of
         // template.
         var templ_result = H.compile($('#templ-result').html());
-        for (i = 0; i < questions.length; i++) {
+        for (var i = 0; i < questions.length; i++) {
             // If answer is correct, score is incremented and correct is set to
             // true. Otherwise correct is set to false, leaving the score as it
             // is.
             correct = answers[i] === questions[i].correctAnswer ? (score++,true) : false;
 
             // Put individual result template into DOM
-            $('#results').append(templ_result({
+            $results.append(templ_result({
                 message: correct ? "Correct" : "Incorrect",
                 question_num: i + 1,
                 colour: correct ? "green" : "red",
@@ -77,12 +94,11 @@ $(function () {
             }));
         }
 
-        // Display final score and rounded percentage
+        // Rounded percentage
         var percentage = Math.round((score / questions.length) * 100);
-
-        // more Mustache to put in score and restart button
+        // Handlebars to put in score, percenatge and restart button
         var templ_score = H.compile($('#templ-score').html());
-        $('#wrapper').append(templ_score({
+        $score.html(templ_score({
             score: score,
             no_qs: questions.length,
             percentage: percentage
@@ -90,27 +106,40 @@ $(function () {
 
         //Hide results on creation to later transition in
         $('.result').hide();
-        $('.score').hide();
+        $score.hide();
 
-        $('#question_wrap').show("blind", transTime, function () {
-            $('.score').show("fade");
-            $("#results div").first().show("fast", function showNext() {
-                $(this).next("div").show("fast", showNext);
-            });
+        $("#results div").first().show("fast", function showNext() {
+            $(this).next("div").show("fast", showNext);
         });
+        $score.fadeIn();
+        $restart.fadeIn();
 
-        ls.hscore = score > ls.hscore ? score : ls.hscore;
+        // If new high score, set in localStorage and increment game count
+        ls.hscore = score > ls.hscore ? (window.alert('New high score!'),score) : ls.hscore;
         ls.games++;
+        // Add these numbers to DOM
+        $('.games .number').html(ls.games);
+        $('.hscore .number').html(ls.hscore);
 
         // Add event listener to restart button
-        $('#restart').click(function () {
-            window.location.href = window.location.href
+        $restart.click(function () {
+            looper = 0;
+            answers = [];
+            $results.html('');
+            $score.html('');
+            $fb.show();
+            $title.text('QUIZ');
+            quizLoop();
         });
     }
 
+    function toggleSelected(id){
+        $('label[for='+id+'] li').toggleClass('selected');
+    }
+
     function swapQ(n) {
-        $('#question_wrap').fadeOut(transTime, function () {
-            $('#question').html('');
+        $Qwrap.fadeOut(transTime, function () {
+            $question.html('');
             $('#choices').html('');
             looper += n;
             quizLoop();
@@ -130,8 +159,8 @@ $(function () {
         looper && swapQ(-1);
     }
 
-    $('#back_button').click(goBack);
-    $('#next_button').click(addAns);
+    $back.click(goBack);
+    $next.click(addAns);
 
     // Request questions from JSON file
     $.getJSON("js/questions.json", function (data) {
@@ -144,13 +173,13 @@ $(function () {
     function testEndScreen(mode) {
         looper = 7;
         var cases = {
-            'rand': [0, 0, 0, 0, 0, 0, 0],
+            'mix': [0, 0, 0, 0, 0, 0, 0],
             'correct': [1, 0, 0, 1, 2, 0, 0],
             'wrong': [0, 1, 1, 0, 0, 1, 1]
         }
         answers = cases[mode];
         if (!answers) console.error('Invalid EndScreen test mode');
     };
-    //testEndScreen('rand');
+    //testEndScreen('mix');
     /**************************/
 });

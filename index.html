@@ -35,10 +35,14 @@
 			<div class="button" id="next_button">Next &rarr;</div>
 		</div>
 
+		<div id="results"></div>
+		<div class="score"></div>
+		<div id="restart">&larr; Restart Quiz</div>
+
 	</div>
 
 	<div id="side">
-		<div class="main">Create Profile</div>
+		<div class="main"></div>
 		<div class="stats">
 			<div class="username"></div>
 			<div class="stat games">Games played: <span class="number"></span></div>
@@ -72,11 +76,8 @@
 	</script>
 
 	<script id="templ-score" type="text/x-handlebars-template">
-		<div class="score">
-			Your final score is {{score}} out of {{no_qs}}<br />
-			{{percentage}}%
-		</div>
-		<div id="restart">&larr; Restart Quiz</div>
+		Your final score is {{score}} out of {{no_qs}}<br />
+		{{percentage}}%
 	</script>
 
 </body>
