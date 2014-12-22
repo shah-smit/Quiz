@@ -90,7 +90,8 @@ body {
   color: #333;
   background-color: white;
   margin: 0 0 0 5%;
-  border-radius: 0 0 15px 15px; }
+  border-radius: 0 0 15px 15px;
+  float: left; }
 
 #title {
   text-align: center;
@@ -135,14 +136,11 @@ input[type=radio] {
 #side {
   background: #333;
   color: white;
-  position: fixed;
-  right: 0;
-  top: 0;
+  float: right;
   font-size: 1.1em;
   font-family: sans-serif;
   font-weight: 300;
   padding: 10px;
-  cursor: pointer;
   box-sizing: border-box;
   width: 200px; }
   #side div {
@@ -187,5 +185,9 @@ input[type=radio] {
     font-size: 1em;
     background: #2A2A2A;
     text-align: center; }
+
+.message {
+  float: right;
+  background: #333; }
 
 /*# sourceMappingURL=main.css.map */

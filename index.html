@@ -7,6 +7,7 @@
 	<!-- <meta name="viewport" content="width=device-width, user-scalable=no"> -->
 
 	<!-- Stylesheets -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,400' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/jquery-ui.min.css" />
 	<link rel="stylesheet" href="css/main.css" />
 
@@ -31,28 +32,30 @@
 		<div id="question_wrap">
 			<div id="question"></div>
 			<div id="choices"></div>
-			<div class="button" id="back_button">&larr; Back</div>
-			<div class="button" id="next_button">Next &rarr;</div>
+			<div class="button" id="back_button" data-text="Back">&larr;</div>
+			<div class="button" id="next_button" data-text="Next">&rarr;</div>
 		</div>
 
 		<div id="results"></div>
 		<div class="score"></div>
-		<div id="restart">&larr; Restart Quiz</div>
+		<div id="restart" class="button" data-text="Restart Quiz">&larr;</div>
 
 	</div>
 
 	<div id="side">
-		<div class="main"></div>
+		<div class="main under"></div>
 		<div class="stats">
 			<div class="username"></div>
 			<div class="stat games">Games played: <span class="number"></span></div>
 			<div class="stat hscore">Highest score: <span class="number"></span></div>
 		</div>
 		<div class="create">
-			username:<input type="text" />
+			username:<input type="text" autofocus />
 			<div class="go">submit</div>
 		</div>
 	</div>
+
+	<div class="message"></div>
 
 	<!-- Handlebars templates -->
 	<script id="templ-choice" type="text/x-handlebars-template">
