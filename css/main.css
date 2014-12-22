@@ -149,7 +149,8 @@ input[type=radio] {
     position: relative;
     padding: 5px; }
   #side .stats {
-    display: none; }
+    display: none;
+    font-size: 0.9em; }
   #side .main {
     text-align: center; }
     #side .main::before {
@@ -168,7 +169,7 @@ input[type=radio] {
       left: 10%;
       right: 10%; }
   #side .create {
-    font-size: 0.8em;
+    font-size: 0.9em;
     display: none; }
     #side .create input {
       background: transparent;
