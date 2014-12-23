@@ -11,12 +11,11 @@
 
 .button {
   position: relative;
-  top: -50px;
   color: #fff;
   text-align: center;
   font-size: 1.5em;
   font-weight: 300;
-  margin: 0 0 auto auto;
+  margin: 0 auto 20px auto;
   padding: 10px;
   border: none;
   border-radius: 5px;
@@ -25,7 +24,7 @@
   -webkit-transition: all 0.35s ease;
   -moz-transition: all 0.35s ease;
   transition: all 0.35s ease;
-  width: 100px;
+  width: 150px;
   height: 50px;
   overflow: hidden;
   line-height: 1.3em; }
@@ -36,7 +35,7 @@
     content: attr(data-text);
     position: absolute;
     top: -2.75em;
-    left: 1em; }
+    left: 2em; }
 
 .result {
   text-align: center;
@@ -70,8 +69,10 @@
   padding: 20px; }
 
 #restart {
-  margin: auto auto 0 10px;
+  margin: 0 auto 20px auto;
   width: 180px; }
+  #restart:before {
+    left: 1em; }
 
 label {
   font-size: 1.2em; }
@@ -142,7 +143,6 @@ input[type=radio] {
   font-size: 1.1em;
   font-family: sans-serif;
   font-weight: 300;
-  padding: 10px;
   box-sizing: border-box;
   width: 15%; }
   #side div {
@@ -201,6 +201,7 @@ input[type=radio] {
   line-height: 70px;
   font-weight: 400;
   text-align: center;
-  color: white; }
+  color: white;
+  border-left: 1px solid black; }
 
 /*# sourceMappingURL=main.css.map */

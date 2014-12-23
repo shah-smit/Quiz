@@ -7,7 +7,8 @@
 	<!-- <meta name="viewport" content="width=device-width, user-scalable=no"> -->
 
 	<!-- Stylesheets -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,400' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,400' rel='stylesheet' />
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="css/jquery-ui.min.css" />
 	<link rel="stylesheet" href="css/main.css" />
 
@@ -16,7 +17,6 @@
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/handlebars.js"></script>
 	<script src="js/modernizr.js"></script>
-	<script src="js/user.js"></script>
 	<script src="js/script.js"></script>
 
 	<!-- Favicon -->
@@ -32,13 +32,13 @@
 		<div id="question_wrap">
 			<div id="question"></div>
 			<div id="choices"></div>
-			<div class="button" id="back_button" data-text="Back">&larr;</div>
-			<div class="button" id="next_button" data-text="Next">&rarr;</div>
+			<div class="button" id="back_button" data-text="Back"><i class="fa fa-chevron-left"></i></div>
+			<div class="button" id="next_button" data-text="Next"><i class="fa fa-chevron-right"></i></div>
 		</div>
 
 		<div id="results"></div>
 		<div class="score"></div>
-		<div id="restart" class="button" data-text="Restart Quiz">&larr;</div>
+		<div class="button" id="restart" data-text="Restart Quiz"><i class="fa fa-chevron-left"></i></div>
 
 	</div>
 
@@ -83,6 +83,10 @@
 	<script id="templ-score" type="text/x-handlebars-template">
 		Your final score is {{score}} out of {{no_qs}}<br />
 		{{percentage}}%
+	</script>
+
+	<script id="templ-question" type="text/x-handlebars-template">
+		<span class="number">Q{{num}}. </span>{{q}}
 	</script>
 
 </body>

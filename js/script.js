@@ -54,7 +54,7 @@ $(function () {
         $main = $('#side .main');
 
         function insStats() {
-            $stats.find('.username').html(ls.username);
+            $stats.find('.username').html('Welcome, '+ls.username);
             $stats.find('.games .number').html(ls.games);
             $stats.find('.hscore .number').html(ls.hscore);
             $main.html('Profile');
@@ -104,7 +104,11 @@ $(function () {
         var tempObj = questions[looper]; //object with q, options and answer
 
         // Display question number and question
-        $question.html('<span class="number">Q'+(looper+1)+'. </span>'+ tempObj.question);
+        var question_templ = H.compile($('#templ-question').html());
+        $question.html(question_templ({
+            num: looper + 1,
+            q: tempObj.question
+        }));
 
         // Create options
         var templ_choice = H.compile($('#templ-choice').html());
@@ -230,18 +234,18 @@ $(function () {
     initUser();
     // Request questions from JSON file
     $.getJSON("js/questions.json", function (data) {
-        questions = data.questions;
+        questions = data;
     }).fail(function () {
         alert('Sorry, there was a problem!');
     }).done(quizLoop);
 
     /******** DEV ONLY *********/
     function testEndScreen(mode) {
-        looper = 7;
+        looper = 8;
         var cases = {
-            'mix': [0, 0, 0, 0, 0, 0, 0],
-            'correct': [1, 0, 0, 1, 2, 0, 0],
-            'wrong': [0, 1, 1, 0, 0, 1, 1]
+            'mix': [0, 0, 0, 0, 0, 0, 0, 0],
+            'correct': [1, 0, 0, 1, 2, 0, 0, 0],
+            'wrong': [0, 1, 1, 0, 0, 1, 1, 1]
         }
         answers = cases[mode];
         if (!answers) console.error('Invalid EndScreen test mode');
