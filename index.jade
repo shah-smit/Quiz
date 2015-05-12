@@ -1,0 +1,72 @@
+doctype html
+html(lang="en")
+	head
+		//- Preamble
+		meta(charset="UTF-8")
+		title Quiz
+		meta(name="viewport",content="width=device-width, user-scalable=no")
+		//- Stylesheets
+		link(href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,400',rel='stylesheet')
+		link(href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css",rel="stylesheet")
+		link(rel="stylesheet",href="css/jquery-ui.min.css")
+		link(rel="stylesheet",href="css/main.css")
+		//- Scripts
+		script(src="js/jquery.min.js")
+		script(src="js/jquery-ui.min.js")
+		script(src="js/handlebars.js")
+		script(src="js/modernizr.js")
+		script(src="js/script.js")
+		//- Favicon
+		link(rel="shortcut icon" href="img/favicon.png")
+body
+	//- wrapper for quiz contents
+	#wrapper
+		#title QUIZ
+		#question_wrap
+			#question
+			#choices
+			.button#back_button(data-text="Back")
+				i.fa.fa-chevron-left
+			.button#next_button(data-text="Next")
+				i.fa.fa-chevron-right
+		#results
+		#score
+		.button#restart(data-text="Restart Quiz")
+			i.fa.fa-chevron-left
+	#side
+		.main.under
+		.stats
+			.username
+			.stat.games Games played: 
+				span.number
+			.stat.hscore Highest score: 
+				span.number
+
+		.create username: 
+			input(type="text" autofocus)/
+			.go submit
+		.message
+	//- Handlebars templates
+	script#templ-choice(type="text/x-handlebars-template").
+		{{#.}}
+		<label for={{@index}}>
+			<li>
+				<input type="radio" name="option" id={{@index}} value={{@index}} />
+				{{.}}
+			</li>
+		</label>
+		{{/.}}
+
+	script#templ-result(type="text/x-handlebars-template").
+		<div class="result">
+			Q{{question_num}}. <span class={{colour}}>{{message}}</span>
+			{{^correct}}
+			<div class="mini-q">{{question}}</div>
+			{{/correct}}
+		</div>
+
+	script#templ-score(type="text/x-handlebars-template").
+		Your final score is {{score}} out of {{no_qs}}<br/>{{percentage}}%
+
+	script#templ-question(type="text/x-handlebars-template").
+		<span class="number">Q{{num}}. </span>{{q}}

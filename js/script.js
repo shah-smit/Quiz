@@ -1,18 +1,18 @@
 $(function () {
     var looper = 0, // looper counter keeps track of current question
         answers = [],
-        questions,
         transTime = 300, //Time in ms for wrapper transition time
         H = Handlebars,
         ls = localStorage,
+        questions,
 
     //Cache DOM
         $wrapper = $('#wrapper'),
 
-        $Qwrap = $wrapper.find('#question_wrap'),
-        $question = $Qwrap.find('#question'),
-        $back = $Qwrap.find('#back_button'),
-        $next = $Qwrap.find('#next_button'),
+        $Q = $wrapper.find('#question_wrap'),
+        $question = $Q.find('#question'),
+        $back = $Q.find('#back_button'),
+        $next = $Q.find('#next_button'),
         $fb = $back.add($next),
 
         $results = $wrapper.find('#results'),
@@ -21,37 +21,37 @@ $(function () {
         $title = $wrapper.find('#title');
 
     function message(m) {
-        var $message = $('.message');
-        var ease = 'easeInOutCubic';
-        var time = 500;
+        var $message = $('.message'),
+            easing = 'easeInOutCubic',
+            t = 500;
 
         $message
-        .animate({right: '0%'}, time, ease)
-        .animate({height: '70px'}, time, ease, function () {
+        .animate({right: '0%'}, t, easing)
+        .animate({height: '70px'}, t, easing, function () {
             $(this).text(m);
         });
 
-        for(var i=0; i<2; i++) {
+        for(var i=2;i--;) {
             $message
-            .animate({color: 'red'}, time, ease)
-            .animate({color: 'white'}, time, ease)
+            .animate({color: 'red'}, t, easing)
+            .animate({color: 'white'}, t, easing);
         }
 
         $message
-        .animate({color: 'red'}, time, ease)
-        .delay(1000)
-        .animate({height: '2px'}, time, ease, function () {
+        .animate({color: 'red'}, t, easing)
+        .delay(1e3)
+        .animate({height: '2px'}, t, easing, function () {
             $(this).text('');
         })
-        .animate({right: '-105%'}, time, ease);
+        .animate({right: '-105%'}, t, easing);
     }
 
     function initUser() {
         if (!Modernizr.localstorage) return;
 
-        $stats = $('.stats'),
-        $create = $('.create'),
-        $main = $('#side .main');
+        var $stats = $('.stats'),
+            $create = $('.create'),
+            $main = $('#side .main');
 
         function insStats() {
             $stats.find('.username').html('Welcome, '+ls.username);
@@ -67,8 +67,7 @@ $(function () {
                 return;
             }
             ls.username = un;
-            ls.games = 0;
-            ls.hscore = 0;
+            ls.games = ls.hscore = 0;
 
             insStats();
 
@@ -76,70 +75,66 @@ $(function () {
             $stats.toggle('fast');
         }
 
-        if (ls.length) {
+        if (ls.username === []._) {
             insStats();
-            $stats.show()
+            $stats.show();
         } else {
-            $main.html('Create Profile')
+            $main.html('Create Profile');
             $create.show();
         }
 
         $('.go').click(submitUser);
         $create.find('input').keydown(function(e) {
-            e.keyCode === 13 ? submitUser() : void 0;
+            if(e.keyCode === 13) submitUser();
         });
 
     }
 
-    function quizLoop() {
+    function quizLoop(previd) {
         $results.hide();
         $score.hide();
         $restart.hide();
 
         //Show end screen if questions finished
-        if (looper >= questions.length) {
-            displayEnd();
-            return;
+        if (looper >= questions.length) displayEnd();
+        else {
+
+            var tempObj = questions[looper]; //object with q, options and answer
+
+            // Display question number and question
+            question_templ = H.compile($('#templ-question').html());
+            $question.html(question_templ({
+                num: looper + 1,
+                q: tempObj.question
+            }));
+
+            // Create options
+            templ_choice = H.compile($('#templ-choice').html());
+            $('#choices').append(templ_choice(tempObj.choices));
+
+            // Make option highlighting method
+            $('input[type=radio][name=option]').change(function () {
+                id = $('input:radio:checked').attr('id');
+                if(previd) toggleSelected(previd);
+                toggleSelected(id);
+                previd = id;
+            });
+
+            // bring wrapper down
+            $Q.fadeIn(transTime);
+
+            // Check if question already has answer and highlight it.
+            if (answers[looper]^[]._) {
+                toggleSelected(answers[looper]);
+                $('.selected').find('input')[0].checked = !0;
+                previd = answers[looper];
+            }
         }
-        var tempObj = questions[looper]; //object with q, options and answer
-
-        // Display question number and question
-        var question_templ = H.compile($('#templ-question').html());
-        $question.html(question_templ({
-            num: looper + 1,
-            q: tempObj.question
-        }));
-
-        // Create options
-        var templ_choice = H.compile($('#templ-choice').html());
-        $('#choices').append(templ_choice(tempObj.choices));
-
-        // Make option highlighting method
-        var previd;
-        var id;
-        $('input[type=radio][name=option]').change(function () {
-            id = $('input:radio:checked').attr('id');
-            previd === void 0 ? 0 : toggleSelected(previd);
-            toggleSelected(id);
-            previd = id;
-        });
-
-        // Check if question already has answer and highlight it.
-        if (answers[looper] !== void 0) {
-            toggleSelected(answers[looper]);
-            $('.selected').find('input')[0].checked = true;
-            previd = answers[looper];
-        }
-
-        // bring wrapper down
-        $Qwrap.fadeIn(transTime);
     }
 
     function displayEnd() {
-        var score = 0;
-
         $fb.hide();
-        $Qwrap.hide();
+        $Q.hide();
         $title.text("Results");
         $results.show();
 
@@ -147,16 +142,16 @@ $(function () {
         // Cache template before loop to avoid re-searching and compiling of
         // template.
         var templ_result = H.compile($('#templ-result').html());
-        for (var i = 0; i < questions.length; i++) {
+        for (i = score = 0; i < questions.length; i++) {
             // If answer is correct, score is incremented and correct is set to
             // true. Otherwise correct is set to false, leaving the score as it
             // is.
-            correct = answers[i] === questions[i].correctAnswer ? (score++,true) : false;
+            correct = answers[i] == questions[i].correctAnswer ? (score++,!0) : !1;
 
             // Put individual result template into DOM
             $results.append(templ_result({
                 message: correct ? "Correct" : "Incorrect",
-                question_num: i + 1,
+                question_num: i+1,
                 colour: correct ? "green" : "red",
                 correct: correct,
                 question: questions[i].question
@@ -164,7 +159,7 @@ $(function () {
         }
 
         // Rounded percentage
-        var percentage = Math.round((score / questions.length) * 100);
+        var percentage = (score*100/questions.length)+0.5|0;
         // Handlebars to put in score, percenatge and restart button
         var templ_score = H.compile($('#templ-score').html());
         $score.html(templ_score({
@@ -180,8 +175,7 @@ $(function () {
         $("#results div").first().show("fast", function showNext() {
             $(this).next("div").show("fast", showNext);
         });
-        $score.fadeIn();
-        $restart.fadeIn();
+        $score.add($restart).fadeIn();
 
         // If new high score, set in localStorage and increment game count
         ls.hscore = score > ls.hscore ? (message('New high score!'),score) : ls.hscore;
@@ -196,7 +190,7 @@ $(function () {
     }
 
     function swapQ(n) {
-        $Qwrap.fadeOut(transTime, function () {
+        $Q.fadeOut(transTime, function () {
             $question.html('');
             $('#choices').html('');
             looper += n;
@@ -206,7 +200,7 @@ $(function () {
 
     function addAns() {
         // Check an answer is chosen
-        if ($("input:radio:checked").length) {
+        if( $("input:radio:checked").length ) {
             answers[looper] = +$("input:radio:checked").attr("value");
             swapQ(1);
         } else message("Select an answer!");
@@ -214,7 +208,7 @@ $(function () {
 
     function goBack() {
         // If at beginning, do nothng.
-        looper && swapQ(-1);
+        if(looper) swapQ(-1);
     }
 
     function restart() {
@@ -235,21 +229,22 @@ $(function () {
     // Request questions from JSON file
     $.getJSON("js/questions.json", function (data) {
         questions = data;
+        quizLoop();
     }).fail(function () {
         alert('Sorry, there was a problem!');
-    }).done(quizLoop);
+    });
 
     /******** DEV ONLY *********/
     function testEndScreen(mode) {
-        looper = 8;
+        looper = questions.length;
         var cases = {
             'mix': [0, 0, 0, 0, 0, 0, 0, 0],
             'correct': [1, 0, 0, 1, 2, 0, 0, 0],
             'wrong': [0, 1, 1, 0, 0, 1, 1, 1]
-        }
+        };
         answers = cases[mode];
         if (!answers) console.error('Invalid EndScreen test mode');
-    };
+    }
     //testEndScreen('mix');
     /**************************/
 });
