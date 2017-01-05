@@ -1,4 +1,41 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Quiz</title><meta name="viewport" content="width=device-width, user-scalable=no"><link href="http://fonts.googleapis.com/css?family=Open+Sans:700,300,400" rel="stylesheet"><link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"><link rel="stylesheet" href="css/jquery-ui.min.css"><link rel="stylesheet" href="css/main.css"><script src="js/jquery.min.js"></script><script src="js/jquery-ui.min.js"></script><script src="js/handlebars.js"></script><script src="js/modernizr.js"></script><script src="js/script.js"></script><link rel="shortcut icon" href="img/favicon.png"></head></html><body><div id="wrapper"><div id="title">QUIZ</div><div id="question_wrap"><div id="question"></div><div id="choices"></div><div id="back_button" data-text="Back" class="button"><i class="fa fa-chevron-left"></i></div><div id="next_button" data-text="Next" class="button"><i class="fa fa-chevron-right"></i></div></div><div id="results"></div><div id="score"></div><div id="restart" data-text="Restart Quiz" class="button"><i class="fa fa-chevron-left"></i></div></div><div id="side"><div class="main under"></div><div class="stats"><div class="username"></div><div class="stat games">Games played: <span class="number"></span></div><div class="stat hscore">Highest score: <span class="number"></span></div></div><div class="create">username: <input type="text" autofocus><div class="go">submit</div></div><div class="message"></div></div><script id="templ-choice" type="text/x-handlebars-template">{{#.}}
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Quiz</title><meta name="viewport" content="width=device-width, user-scalable=no"><link href="http://fonts.googleapis.com/css?family=Open+Sans:700,300,400" rel="stylesheet"><link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"><link rel="stylesheet" href="css/jquery-ui.min.css"><link rel="stylesheet" href="css/main.css"><script src="js/jquery.min.js"></script><script src="js/jquery-ui.min.js"></script><script src="js/handlebars.js"></script><script src="js/modernizr.js"></script><script src="js/script.js"></script><link rel="shortcut icon" href="img/favicon.png"></head></html>
+<body>
+    <div id="wrapper">
+        <div id="title">QUIZ</div>
+        <div id="question_wrap">
+            <div id="question"></div>
+            <div id="choices"></div>
+            <div id="back_button" data-text="Back" class="button">
+                <i class="fa fa-chevron-left"></i>
+            </div>
+            <div id="next_button" data-text="Next" class="button">
+                <i class="fa fa-chevron-right"></i>
+            </div>
+        </div>
+        <div id="results"></div>
+        <div id="score"></div>
+        <div id="restart" data-text="Restart Quiz" class="button">
+            <i class="fa fa-chevron-left"></i>
+        </div>
+    </div>
+    <div id="side">
+        <div class="main under"></div>
+        <div class="stats">
+            <div class="username"></div>
+            <div class="stat games">Games played: 
+                <span class="number"></span>
+            </div>
+            <div class="stat hscore">Highest score: 
+                <span class="number"></span>
+            </div>
+        </div>
+        <div class="create">username: 
+            <input type="text" autofocus>
+            <div class="go">submit</div>
+        </div>
+        <div class="message"></div>
+    </div>
+    <script id="templ-choice" type="text/x-handlebars-template">{{#.}}
 <label for={{@index}}>
 	<li>
 		<input type="radio" name="option" id={{@index}} value={{@index}} />
@@ -15,5 +52,5 @@
 </script><script id="templ-score" type="text/x-handlebars-template">| Your final score is {{score}} out of {{no_qs}}
 br/
 | {{percentage}}%
-</script><script id="templ-question" type="text/x-handlebars-template">span.number Q{{num}}. 
+</script><script id="templ-question" type="text/x-handlebars-template">Q{{num}}. 
 | {{q}}</script></body>

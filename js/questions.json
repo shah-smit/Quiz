@@ -33,10 +33,5 @@
         "question": "Who is Prime Minister of the United Kingdom?",
         "choices": ["Gordon Brown", "Winston Churchill", "David Cameron"],
         "correctAnswer": 2
-    },
-    {
-        "question": "",
-        "choices": ["", "", ""],
-        "correctAnswer": 0
     }
 ]

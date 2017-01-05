@@ -6,7 +6,7 @@ $(function () {
         ls = localStorage,
         questions,
 
-    //Cache DOM
+        //Cache DOM
         $wrapper = $('#wrapper'),
 
         $Q = $wrapper.find('#question_wrap'),
@@ -15,10 +15,14 @@ $(function () {
         $next = $Q.find('#next_button'),
         $fb = $back.add($next),
 
+
         $results = $wrapper.find('#results'),
         $score = $wrapper.find('.score'),
         $restart = $wrapper.find('#restart'),
         $title = $wrapper.find('#title');
+    var $stats = $('.stats'),
+        $create = $('.create'),
+        $main = $('#side .main');
 
     function message(m) {
         var $message = $('.message'),
@@ -26,54 +30,48 @@ $(function () {
             t = 500;
 
         $message
-        .animate({right: '0%'}, t, easing)
-        .animate({height: '70px'}, t, easing, function () {
-            $(this).text(m);
-        });
+            .animate({ right: '0%' }, t, easing)
+            .animate({ height: '70px' }, t, easing, function () {
+                $(this).text(m);
+            });
 
-        for(var i=2;i--;) {
+        for (var i = 2; i--;) {
             $message
-            .animate({color: 'red'}, t, easing)
-            .animate({color: 'white'}, t, easing);
+                .animate({ color: 'red' }, t, easing)
+                .animate({ color: 'white' }, t, easing);
         }
 
         $message
-        .animate({color: 'red'}, t, easing)
-        .delay(1e3)
-        .animate({height: '2px'}, t, easing, function () {
-            $(this).text('');
-        })
-        .animate({right: '-105%'}, t, easing);
+            .animate({ color: 'red' }, t, easing)
+            .delay(1e3)
+            .animate({ height: '2px' }, t, easing, function () {
+                $(this).text('');
+            })
+            .animate({ right: '-105%' }, t, easing);
+    }
+
+    function submitUser() {
+        var un = $create.find('input').val();
+        if (!un && un == undefined) {
+            message('Enter a username!');
+            return;
+        }
+        initialise(un);
+    }
+
+    function initialise(user)
+    {
+        ls.username = user;
+        ls.games = ls.hscore = 0;
+
+        insStats();
+
+        $create.toggle('fast');
+        $stats.toggle('fast');
     }
 
     function initUser() {
         if (!Modernizr.localstorage) return;
-
-        var $stats = $('.stats'),
-            $create = $('.create'),
-            $main = $('#side .main');
-
-        function insStats() {
-            $stats.find('.username').html('Welcome, '+ls.username);
-            $stats.find('.games .number').html(ls.games);
-            $stats.find('.hscore .number').html(ls.hscore);
-            $main.html('Profile');
-        }
-
-        function submitUser() {
-            var un = $create.find('input').val();
-            if (!un) {
-                message('Enter a username!');
-                return;
-            }
-            ls.username = un;
-            ls.games = ls.hscore = 0;
-
-            insStats();
-
-            $create.toggle('fast');
-            $stats.toggle('fast');
-        }
 
         if (ls.username === []._) {
             insStats();
@@ -84,10 +82,29 @@ $(function () {
         }
 
         $('.go').click(submitUser);
-        $create.find('input').keydown(function(e) {
-            if(e.keyCode === 13) submitUser();
+        $create.find('input').keydown(function (e) {
+            if (e.keyCode === 13) 
+            {
+                submitUser();
+            }
         });
+        
+        var temp_user = JSON.stringify(ls.username);
+        temp_user = temp_user.replace('"','');
+        temp_user = temp_user.replace('"','');
+        if(temp_user.trim() != null && temp_user != '')
+        {
+            initialise(temp_user);
+        }
+        
 
+    }
+
+    function insStats() {
+        $stats.find('.username').html('Welcome, ' + ls.username);
+        $stats.find('.games .number').html(ls.games);
+        $stats.find('.hscore .number').html(ls.hscore);
+        $main.html('Profile');
     }
 
     function quizLoop(previd) {
@@ -115,7 +132,7 @@ $(function () {
             // Make option highlighting method
             $('input[type=radio][name=option]').change(function () {
                 id = $('input:radio:checked').attr('id');
-                if(previd) toggleSelected(previd);
+                if (previd) toggleSelected(previd);
                 toggleSelected(id);
                 previd = id;
             });
@@ -124,7 +141,7 @@ $(function () {
             $Q.fadeIn(transTime);
 
             // Check if question already has answer and highlight it.
-            if (answers[looper]^[]._) {
+            if (answers[looper] ^ []._) {
                 toggleSelected(answers[looper]);
                 $('.selected').find('input')[0].checked = !0;
                 previd = answers[looper];
@@ -146,12 +163,12 @@ $(function () {
             // If answer is correct, score is incremented and correct is set to
             // true. Otherwise correct is set to false, leaving the score as it
             // is.
-            correct = answers[i] == questions[i].correctAnswer ? (score++,!0) : !1;
+            correct = answers[i] == questions[i].correctAnswer ? (score++ , !0) : !1;
 
             // Put individual result template into DOM
             $results.append(templ_result({
                 message: correct ? "Correct" : "Incorrect",
-                question_num: i+1,
+                question_num: i + 1,
                 colour: correct ? "green" : "red",
                 correct: correct,
                 question: questions[i].question
@@ -159,7 +176,7 @@ $(function () {
         }
 
         // Rounded percentage
-        var percentage = (score*100/questions.length)+0.5|0;
+        var percentage = (score * 100 / questions.length) + 0.5 | 0;
         // Handlebars to put in score, percenatge and restart button
         var templ_score = H.compile($('#templ-score').html());
         $score.html(templ_score({
@@ -178,15 +195,15 @@ $(function () {
         $score.add($restart).fadeIn();
 
         // If new high score, set in localStorage and increment game count
-        ls.hscore = score > ls.hscore ? (message('New high score!'),score) : ls.hscore;
+        ls.hscore = score > ls.hscore ? (message('New high score!'), score) : ls.hscore;
         ls.games++;
         // Add these numbers to DOM
         $('.games .number').html(ls.games);
         $('.hscore .number').html(ls.hscore);
     }
 
-    function toggleSelected(id){
-        $('label[for='+id+'] li').toggleClass('selected');
+    function toggleSelected(id) {
+        $('label[for=' + id + '] li').toggleClass('selected');
     }
 
     function swapQ(n) {
@@ -200,7 +217,7 @@ $(function () {
 
     function addAns() {
         // Check an answer is chosen
-        if( $("input:radio:checked").length ) {
+        if ($("input:radio:checked").length) {
             answers[looper] = +$("input:radio:checked").attr("value");
             swapQ(1);
         } else message("Select an answer!");
@@ -208,7 +225,7 @@ $(function () {
 
     function goBack() {
         // If at beginning, do nothng.
-        if(looper) swapQ(-1);
+        if (looper) swapQ(-1);
     }
 
     function restart() {
@@ -223,8 +240,7 @@ $(function () {
 
     $back.click(goBack);
     $next.click(addAns);
-    $restart.click(restart);
-
+    $restart.click(restart)
     initUser();
     // Request questions from JSON file
     $.getJSON("js/questions.json", function (data) {
